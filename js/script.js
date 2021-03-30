@@ -3,6 +3,9 @@ let AllUnOrderedLists = [a.children[1], a.children[3], a.children[5]];
 
 let finishSelectionButton = document.getElementById("finishSelectionButton");
 
+let cover = document.querySelector(".cover");
+let orderDiv = document.querySelector(".delivery");
+
 let selectedFood = [];
 let selectedDrink = [];
 let selectedDessert = [];
@@ -34,6 +37,7 @@ function addEventListeners(){
     })
     
 
+    finishSelectionButton.addEventListener("click", renderCheckOrder)
 }
 
 
@@ -99,4 +103,49 @@ function updateSelectionButton(){
         finishSelectionButton.disabled = false;
         finishSelectionButton.innerHTML = "Fechar pedido";
     }
+}
+
+function renderCheckOrder(){
+    cover.classList.remove("ocult");
+    orderDiv.classList.remove("ocult");
+
+    let foodNameHolder = document.getElementById("foodName");
+    let foodPriceHolder = document.getElementById("foodPrice");
+
+    let drinkNameHolder = document.getElementById("drinkName");
+    let drinkPriceHolder = document.getElementById("drinkPrice");
+
+    let dessertNameHolder = document.getElementById("dessertName");
+    let dessertPriceHolder = document.getElementById("dessertPrice");
+
+    let totalPriceHolder = document.getElementById("TotalPrice");
+
+    foodNameHolder.textContent=selectedFood[1].name;
+    foodPriceHolder.textContent = selectedFood[1].price;
+
+    drinkNameHolder.textContent=selectedDrink[1].name;
+    drinkPriceHolder.textContent = selectedDrink[1].price;
+
+    dessertNameHolder.textContent=selectedDessert[1].name;
+    dessertPriceHolder.textContent = selectedDessert[1].price;
+
+    let totalPrice = calculateTotalPrice();
+
+    totalPriceHolder.textContent =`R$ ${totalPrice}`;
+
+}
+
+function calculateTotalPrice(){
+    let foodPrice = selectedFood[1].price.split(" ")[1];
+    let drinkPrice = selectedDrink[1].price.split(" ")[1];
+    let dessertPrice = selectedDessert[1].price.split(" ")[1];
+
+
+    foodPrice = foodPrice.replace(",", ".");
+    drinkPrice = drinkPrice.replace(",", ".");
+    dessertPrice = dessertPrice.replace(",", ".");
+
+    let total = parseFloat(foodPrice) + parseFloat(drinkPrice) + parseFloat(dessertPrice);
+
+    return total.toFixed(2);
 }
