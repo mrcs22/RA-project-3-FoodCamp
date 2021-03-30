@@ -40,7 +40,8 @@ h2{font-size: 18px;}
 
 .content{
     width: 100%;
-    margin: 92px 0;
+    max-width: 800px;
+    margin: 92px auto;
     margin-top: 132px;
     padding: 0 15px;
 }
@@ -49,8 +50,7 @@ h2{font-size: 18px;}
 .options{
     margin-top: 50px;
     display: flex;
-    overflow: hidden;
-    
+    overflow-x: scroll;
 }
 
 li{
@@ -112,8 +112,8 @@ img{
 }
 
 .selected{
-    border: 5px solid #32B72F;
-    }
+   box-shadow:  inset 0px 0px 0px 5px #32B72F;
+ }
 
 
 
@@ -185,8 +185,20 @@ button{
     width: 364px;
     height: 61px;
     border-radius: 50px;
-    background-color: #cbcbcb;
+    background-color: #32B72F;
     border: none;
+    cursor: pointer;
+    font-family: Roboto;
+    font-weight: bold;
+    color: #fff;
+    font-size: 20px;
+    transition: 600ms;
+}
+
+button:disabled{
+    background-color: #cbcbcb;
+    font-weight: normal;
+    cursor: initial;
 }
 
 .cover{
