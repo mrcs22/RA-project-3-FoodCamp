@@ -3,6 +3,8 @@ let AllUnOrderedLists = [a.children[1], a.children[3], a.children[5]];
 
 let finishSelectionButton = document.getElementById("finishSelectionButton");
 
+const cancelSelectionButton = document.getElementById("cancel");
+
 let cover = document.querySelector(".cover");
 let orderDiv = document.querySelector(".delivery");
 
@@ -26,18 +28,20 @@ function addEventListeners(){
 
     foods.forEach(food =>{
         food.addEventListener("click", () => {handleMenuClick("food", food)})
-    })
+    });
     
     drinks.forEach(drink =>{
         drink.addEventListener("click", () => {handleMenuClick("drink", drink)})
-    })
+    });
     
     desserts.forEach(dessert =>{
         dessert.addEventListener("click", () => {handleMenuClick("dessert", dessert)})
-    })
+    });
     
 
-    finishSelectionButton.addEventListener("click", renderCheckOrder)
+    finishSelectionButton.addEventListener("click", renderCheckOrder);
+
+    cancelSelectionButton.addEventListener("click", cancelSelection);
 }
 
 
@@ -148,4 +152,9 @@ function calculateTotalPrice(){
     let total = parseFloat(foodPrice) + parseFloat(drinkPrice) + parseFloat(dessertPrice);
 
     return total.toFixed(2);
+}
+
+function cancelSelection(){
+    cover.classList.add("ocult");
+    orderDiv.classList.add("ocult");
 }
