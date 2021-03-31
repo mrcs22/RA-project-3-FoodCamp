@@ -67,20 +67,25 @@ function handleMenuClick(itemType, item){
     } 
 
     let thisItem = [item, itemInformation];
+    let selectionIcon = item.children[1].children[2].children[0];
 
-    performItemSelection( itemType, thisItem);
-
+    performItemSelection( itemType, thisItem, selectionIcon);
 
     item.classList.add("selected");
+    selectionIcon.classList.remove("ocult");
     updateSelectionButton()
 }
 
-function   performItemSelection(itemType, newItem){
+function   performItemSelection(itemType, newItem, selectionIcon){
    switch (itemType){
        case "food":
            if(selectedFood.length > 0){
                let lastSelectedfood = selectedFood[0];
                lastSelectedfood.classList.remove("selected");
+
+               let lastSelectionIcon = lastSelectedfood.children[1].children[2].children[0];
+               lastSelectionIcon.classList.add("ocult");
+               
                selectedFood = [];
            }
            selectedFood = [...newItem];
@@ -89,6 +94,10 @@ function   performItemSelection(itemType, newItem){
            if(selectedDrink.length > 0){
                let lastSelectedDrink = selectedDrink[0];
                lastSelectedDrink.classList.remove("selected");
+
+               let lastSelectionIcon = lastSelectedDrink.children[1].children[2].children[0];
+               lastSelectionIcon.classList.add("ocult");
+
                selectedDrink = [];
            }
            selectedDrink = [...newItem];
@@ -97,6 +106,10 @@ function   performItemSelection(itemType, newItem){
            if(selectedDessert.length > 0){
                let lastSelectedDessert = selectedDessert[0];
                lastSelectedDessert.classList.remove("selected");
+
+               let lastSelectionIcon = lastSelectedDessert.children[1].children[2].children[0];
+               lastSelectionIcon.classList.add("ocult");
+
                selectedDessert = [];
            }
            selectedDessert = [...newItem];
