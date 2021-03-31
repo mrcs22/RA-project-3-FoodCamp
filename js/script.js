@@ -3,7 +3,10 @@ let AllUnOrderedLists = [a.children[1], a.children[3], a.children[5]];
 
 let finishSelectionButton = document.getElementById("finishSelectionButton");
 
+const orderButton = document.getElementById("order");
 const cancelSelectionButton = document.getElementById("cancel");
+
+const deliveryDivTitle = document.getElementById("deliveryTitle");
 
 let cover = document.querySelector(".cover");
 let orderDiv = document.querySelector(".delivery");
@@ -11,6 +14,9 @@ let orderDiv = document.querySelector(".delivery");
 let selectedFood = [];
 let selectedDrink = [];
 let selectedDessert = [];
+let totalPrice = null;
+let clientName = null;
+let clientAddress = null;
 
 let foods = [...AllUnOrderedLists[0].children];
 let drinks = [...AllUnOrderedLists[1].children];
@@ -23,6 +29,7 @@ function start(){
     addEventListeners();
 
 }
+
 
 function addEventListeners(){
 
@@ -42,6 +49,8 @@ function addEventListeners(){
     finishSelectionButton.addEventListener("click", renderCheckOrder);
 
     cancelSelectionButton.addEventListener("click", cancelSelection);
+
+    orderButton.addEventListener("click", handleOrderClick);
 }
 
 
@@ -133,7 +142,7 @@ function renderCheckOrder(){
     dessertNameHolder.textContent=selectedDessert[1].name;
     dessertPriceHolder.textContent = selectedDessert[1].price;
 
-    let totalPrice = calculateTotalPrice();
+    totalPrice = calculateTotalPrice();
 
     totalPriceHolder.textContent =`R$ ${totalPrice}`;
 
@@ -157,4 +166,104 @@ function calculateTotalPrice(){
 function cancelSelection(){
     cover.classList.add("ocult");
     orderDiv.classList.add("ocult");
+}
+
+function handleOrderClick(){
+    
+    removeDeliveryInfomation();
+    renderInputFields(orderDiv);
+
+
+    orderButton.removeEventListener("click", handleOrderClick);
+    orderButton.addEventListener("click", finishOrder);
+
+}
+
+function removeDeliveryInfomation(){
+    let orderDivChildren = orderDiv.children; 
+
+    orderDivChildren = [orderDivChildren[1],orderDivChildren[2],orderDivChildren[3],orderDivChildren[4],orderDivChildren[6]];
+
+    orderDivChildren.forEach( child =>{
+        orderDiv.removeChild(child);
+    })
+}
+
+
+
+function renderInputFields(div){
+
+    const nameLabel = document.createElement("p");
+    nameLabel.innerHTML = "Nome:";
+    const addressLabel = document.createElement("p");
+    addressLabel.innerHTML = "Endereço:";
+
+    const nameInput = document.createElement("input");
+    nameInput.setAttribute("id", "nameInput");
+    nameInput.focus;
+
+    const addressInput = document.createElement("input");
+    addressInput.setAttribute("id", "addressInput");
+
+    deliveryDivTitle.textContent = "Estamos quase lá...";
+
+    orderButton.innerHTML="Concluir";
+    orderButton.disabled = true;
+
+
+    div.removeChild(orderButton);
+
+    div.appendChild(nameLabel);
+    div.appendChild(nameInput);
+    div.appendChild(addressLabel);
+    div.appendChild(addressInput);
+
+    div.appendChild(orderButton);
+
+    checkForInputs(nameInput, addressInput);
+}
+
+
+function checkForInputs(input1, input2){
+    
+    input1.addEventListener("keyup", () => handleChange(input1, input2));
+    input2.addEventListener("keyup", () => handleChange(input1, input2));
+    
+}
+
+
+function handleChange(input1, input2){
+    if(input1.value && input2.value){
+        orderButton.disabled=false;
+
+        clientName = input1.value;
+        clientAddress = input2.value;
+    }
+    else{
+        orderButton.disabled=true;
+    }
+}
+
+
+function finishOrder(){
+
+    let message = `
+    Olá, gostaria de fazer o pedido:
+
+    - Prato: ${selectedFood[1].name} 
+
+    - Bebida: ${selectedDrink[1].name}
+
+    - Sobremesa: ${selectedDessert[1].name}
+
+    Total: R$ ${totalPrice}
+
+    Nome: ${clientName}
+    Endereço: ${clientAddress}
+    `
+ 
+    message = encodeURIComponent(message);
+
+    window.open(`https://wa.me/?text=${message}`);
+   
 }
