@@ -1,5 +1,6 @@
-let a = document.querySelector(".content");
-let AllUnOrderedLists = [a.children[1], a.children[3], a.children[5]];
+let foods = document.querySelectorAll("#foods li");
+let drinks = document.querySelectorAll("#drinks li");
+let desserts = document.querySelectorAll("#desserts li");
 
 let finishSelectionButton = document.getElementById("finishSelectionButton");
 
@@ -18,9 +19,6 @@ let totalPrice = null;
 let clientName = null;
 let clientAddress = null;
 
-let foods = [...AllUnOrderedLists[0].children];
-let drinks = [...AllUnOrderedLists[1].children];
-let desserts = [...AllUnOrderedLists[2].children];
 
 start();
 
@@ -57,33 +55,35 @@ function addEventListeners(){
 function handleMenuClick(itemType, item){
     
     let ItemDescriptionDiv = item.children[1];
-    let nameHolder = ItemDescriptionDiv.children[0];
-    let priceHolder = ItemDescriptionDiv.children[2];
 
-    
+    let itemNameHolder = ItemDescriptionDiv.children[0];
+    let itemPriceHolder = ItemDescriptionDiv.children[2];
+
     let itemInformation =  {
-        name: nameHolder.textContent,
-        price: priceHolder.textContent
+        name: itemNameHolder.textContent,
+        price: itemPriceHolder.textContent
     } 
 
     let thisItem = [item, itemInformation];
-    let selectionIcon = item.children[1].children[2].children[0];
 
-    performItemSelection( itemType, thisItem, selectionIcon);
+    let selectionIcon = item.querySelector("ion-icon");
+    selectionIcon.classList.remove("ocult");
+
+    performItemSelection( itemType, thisItem);
 
     item.classList.add("selected");
-    selectionIcon.classList.remove("ocult");
+    
     updateSelectionButton()
 }
 
-function   performItemSelection(itemType, newItem, selectionIcon){
+function   performItemSelection(itemType, newItem){
    switch (itemType){
        case "food":
            if(selectedFood.length > 0){
                let lastSelectedfood = selectedFood[0];
                lastSelectedfood.classList.remove("selected");
 
-               let lastSelectionIcon = lastSelectedfood.children[1].children[2].children[0];
+               let lastSelectionIcon = lastSelectedfood.querySelector("ion-icon");
                lastSelectionIcon.classList.add("ocult");
                
                selectedFood = [];
@@ -95,7 +95,7 @@ function   performItemSelection(itemType, newItem, selectionIcon){
                let lastSelectedDrink = selectedDrink[0];
                lastSelectedDrink.classList.remove("selected");
 
-               let lastSelectionIcon = lastSelectedDrink.children[1].children[2].children[0];
+               let lastSelectionIcon = lastSelectedDrink.querySelector("ion-icon");
                lastSelectionIcon.classList.add("ocult");
 
                selectedDrink = [];
@@ -107,7 +107,7 @@ function   performItemSelection(itemType, newItem, selectionIcon){
                let lastSelectedDessert = selectedDessert[0];
                lastSelectedDessert.classList.remove("selected");
 
-               let lastSelectionIcon = lastSelectedDessert.children[1].children[2].children[0];
+               let lastSelectionIcon = lastSelectedDessert.querySelector("ion-icon");
                lastSelectionIcon.classList.add("ocult");
 
                selectedDessert = [];
@@ -213,8 +213,7 @@ function renderInputFields(div){
 
     const nameInput = document.createElement("input");
     nameInput.setAttribute("id", "nameInput");
-    nameInput.focus;
-
+    
     const addressInput = document.createElement("input");
     addressInput.setAttribute("id", "addressInput");
 
