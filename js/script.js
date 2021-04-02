@@ -12,9 +12,9 @@ const deliveryDivTitle = document.getElementById("deliveryTitle");
 let cover = document.querySelector(".cover");
 let orderDiv = document.querySelector(".delivery");
 
-let selectedFood = [];
-let selectedDrink = [];
-let selectedDessert = [];
+let selectedFood = null;
+let selectedDrink = null;
+let selectedDessert = null;
 let totalPrice = null;
 let clientData = null;
 
@@ -57,12 +57,12 @@ function handleMenuClick(itemType, itemHtmlElement){
     const itemNameHolder = itemHtmlElement.querySelector("strong");
     const itemPriceHolder = itemHtmlElement.querySelector("p:nth-child(3)");
 
-    const itemInformation =  {
+    const itemData =  {
         name: itemNameHolder.textContent,
         price: itemPriceHolder.textContent
     } 
 
-    const thisItem = [itemHtmlElement, itemInformation];
+    const thisItem = {itemHtmlElement, itemData};
 
     const selectionIcon = itemHtmlElement.querySelector("ion-icon");
     selectionIcon.classList.remove("ocult");
@@ -73,58 +73,59 @@ function handleMenuClick(itemType, itemHtmlElement){
     
 }
 
-function performSelectionChanges(itemType, newItem){
+function performSelectionChanges(itemType, selectedItem){
 
-   switch (itemType){
-       case "food":
-           if(selectedFood.length > 0){
-               let lastSelectedfood = selectedFood[0];
-               lastSelectedfood.classList.remove("selected");
-
-               let lastSelectionIcon = lastSelectedfood.querySelector("ion-icon");
-               lastSelectionIcon.classList.add("ocult");
-               
-               selectedFood = [];
-           }
-           selectedFood = [...newItem];
-           break;
+    const {itemHtmlElement: htmlElement, itemData: data} = selectedItem;
+    
+    switch (itemType){
+        case "food":
+            if(selectedFood !== null){
+                let lastSelectedfood = selectedFood.htmlElement;
+                lastSelectedfood.classList.remove("selected");
+ 
+                let lastSelectionIcon = lastSelectedfood.querySelector("ion-icon");
+                lastSelectionIcon.classList.add("ocult");
+                
+            }
+            selectedFood = {htmlElement, data};
+            break;
         case "drink":
-           if(selectedDrink.length > 0){
-               let lastSelectedDrink = selectedDrink[0];
-               lastSelectedDrink.classList.remove("selected");
-
-               let lastSelectionIcon = lastSelectedDrink.querySelector("ion-icon");
-               lastSelectionIcon.classList.add("ocult");
-
-               selectedDrink = [];
-           }
-           selectedDrink = [...newItem];
-           break;
-           case "dessert":
-           if(selectedDessert.length > 0){
-               let lastSelectedDessert = selectedDessert[0];
-               lastSelectedDessert.classList.remove("selected");
-
-               let lastSelectionIcon = lastSelectedDessert.querySelector("ion-icon");
-               lastSelectionIcon.classList.add("ocult");
-
-               selectedDessert = [];
-           }
-           selectedDessert = [...newItem];
-           break;
-
-           default:
-               console.exception("Error at checkforSectedItem function");
+            if(selectedDrink !== null){
+                let lastSelectedDrink = selectedDrink.htmlElement;
+                lastSelectedDrink.classList.remove("selected");
+ 
+                let lastSelectionIcon = lastSelectedDrink.querySelector("ion-icon");
+                lastSelectionIcon.classList.add("ocult");
+ 
+            }
+            selectedDrink = {htmlElement, data};
+            break;
+        case "dessert":
+            if(selectedDessert !== null){
+                let lastSelectedDessert = selectedDessert.htmlElement;
+                lastSelectedDessert.classList.remove("selected");
+ 
+                let lastSelectionIcon = lastSelectedDessert.querySelector("ion-icon");
+                lastSelectionIcon.classList.add("ocult");
+ 
+            }
+            selectedDessert =  {htmlElement, data};
+            break;
+ 
+        default:
+            console.exception("Error at checkforSectedItem function");
 
     }
 
-    updateSelectionButton();
+    trySelectionButtonUpdate();
 }
 
-function updateSelectionButton(){
-    let counter = selectedFood.length + selectedDrink.length + selectedDessert.length;
-
-    if(counter > 5){
+function trySelectionButtonUpdate(){
+    const isFoodSelected = selectedFood !== null;
+    const isDrinkSelected = selectedDrink !== null;
+    const isDessertSelected = selectedDessert !== null;
+    
+    if(isFoodSelected && isDrinkSelected && isDessertSelected){
         finishSelectionButton.disabled = false;
         finishSelectionButton.innerHTML = "Fechar pedido";
     }
