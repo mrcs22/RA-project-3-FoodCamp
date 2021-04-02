@@ -28,7 +28,6 @@ function start(){
 
 }
 
-
 function addEventListeners(){
 
     foods.forEach(food =>{
@@ -158,7 +157,6 @@ function renderCheckOrder(){
     totalPrice = calculateTotalPrice();
 
     totalPriceHolder.textContent =`R$ ${totalPrice}`;
-
 }
 
 function calculateTotalPrice(){
@@ -191,9 +189,10 @@ function handleOrderClick(){
 }
 
 function removeDeliveryInfomation(){
-    let orderDivChildren = orderDiv.children; 
+    let orderDivChildren = orderDiv.querySelectorAll("p");
+    let cancelStrong = orderDiv.querySelector("strong:last-child");
 
-    orderDivChildren = [orderDivChildren[1],orderDivChildren[2],orderDivChildren[3],orderDivChildren[4],orderDivChildren[6]];
+    orderDivChildren = [...orderDivChildren, cancelStrong];
 
     orderDivChildren.forEach( child =>{
         orderDiv.removeChild(child);
@@ -201,7 +200,7 @@ function removeDeliveryInfomation(){
 }
 
 function renderInputFields(div){
-
+    
     const nameLabel = document.createElement("p");
     nameLabel.innerHTML = "Nome:";
     const addressLabel = document.createElement("p");
@@ -250,7 +249,6 @@ function handleInputsChange(input1, input2){
 }
 
 function finishOrder(){
-
     let message = `
     Olá, gostaria de fazer o pedido:
 
@@ -267,5 +265,4 @@ function finishOrder(){
     message = encodeURIComponent(message);
 
     window.open(`https://wa.me/?text=${message}`);
-   
 }
