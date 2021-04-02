@@ -135,25 +135,25 @@ function renderCheckOrder(){
     cover.classList.remove("ocult");
     orderDiv.classList.remove("ocult");
 
-    let foodNameHolder = document.getElementById("foodName");
-    let foodPriceHolder = document.getElementById("foodPrice");
+    const foodNameHolder = document.getElementById("foodName");
+    const foodPriceHolder = document.getElementById("foodPrice");
 
-    let drinkNameHolder = document.getElementById("drinkName");
-    let drinkPriceHolder = document.getElementById("drinkPrice");
+    const drinkNameHolder = document.getElementById("drinkName");
+    const drinkPriceHolder = document.getElementById("drinkPrice");
 
-    let dessertNameHolder = document.getElementById("dessertName");
-    let dessertPriceHolder = document.getElementById("dessertPrice");
+    const dessertNameHolder = document.getElementById("dessertName");
+    const dessertPriceHolder = document.getElementById("dessertPrice");
 
-    let totalPriceHolder = document.getElementById("TotalPrice");
+    const totalPriceHolder = document.getElementById("TotalPrice");
 
-    foodNameHolder.textContent=selectedFood[1].name;
-    foodPriceHolder.textContent = selectedFood[1].price;
+    foodNameHolder.textContent = selectedFood.data.name;
+    foodPriceHolder.textContent = selectedFood.data.price;
 
-    drinkNameHolder.textContent=selectedDrink[1].name;
-    drinkPriceHolder.textContent = selectedDrink[1].price;
+    drinkNameHolder.textContent = selectedDrink.data.name;
+    drinkPriceHolder.textContent = selectedDrink.data.price;
 
-    dessertNameHolder.textContent=selectedDessert[1].name;
-    dessertPriceHolder.textContent = selectedDessert[1].price;
+    dessertNameHolder.textContent = selectedDessert.data.name;
+    dessertPriceHolder.textContent = selectedDessert.data.price;
 
     totalPrice = calculateTotalPrice();
 
@@ -162,18 +162,19 @@ function renderCheckOrder(){
 }
 
 function calculateTotalPrice(){
-    let foodPrice = selectedFood[1].price.split(" ")[1];
-    let drinkPrice = selectedDrink[1].price.split(" ")[1];
-    let dessertPrice = selectedDessert[1].price.split(" ")[1];
-
-
-    foodPrice = foodPrice.replace(",", ".");
-    drinkPrice = drinkPrice.replace(",", ".");
-    dessertPrice = dessertPrice.replace(",", ".");
-
-    let total = parseFloat(foodPrice) + parseFloat(drinkPrice) + parseFloat(dessertPrice);
+    let foodPrice = formatValue(selectedFood.data.price);
+    let drinkPrice = formatValue(selectedDrink.data.price);
+    let dessertPrice = formatValue(selectedDessert.data.price);
+    
+    let total = foodPrice + drinkPrice + dessertPrice;
 
     return total.toFixed(2);
+}
+
+function formatValue(value){
+    value = value.split(" ")[1];
+    value = value.replace(",", ".");
+    return parseFloat(value);
 }
 
 function cancelSelection(){
