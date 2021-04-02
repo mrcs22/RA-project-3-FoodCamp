@@ -16,8 +16,8 @@ let selectedFood = [];
 let selectedDrink = [];
 let selectedDessert = [];
 let totalPrice = null;
-let clientName = null;
-let clientAddress = null;
+let clientData = null;
+
 
 
 start();
@@ -52,31 +52,29 @@ function addEventListeners(){
 }
 
 
-function handleMenuClick(itemType, item){
-    
-    let ItemDescriptionDiv = item.children[1];
+function handleMenuClick(itemType, itemHtmlElement){
 
-    let itemNameHolder = ItemDescriptionDiv.children[0];
-    let itemPriceHolder = ItemDescriptionDiv.children[2];
+    const itemNameHolder = itemHtmlElement.querySelector("strong");
+    const itemPriceHolder = itemHtmlElement.querySelector("p:nth-child(3)");
 
-    let itemInformation =  {
+    const itemInformation =  {
         name: itemNameHolder.textContent,
         price: itemPriceHolder.textContent
     } 
 
-    let thisItem = [item, itemInformation];
+    const thisItem = [itemHtmlElement, itemInformation];
 
-    let selectionIcon = item.querySelector("ion-icon");
+    const selectionIcon = itemHtmlElement.querySelector("ion-icon");
     selectionIcon.classList.remove("ocult");
 
-    performItemSelection( itemType, thisItem);
+    itemHtmlElement.classList.add("selected");
 
-    item.classList.add("selected");
+    performSelectionChanges( itemType, thisItem);
     
-    updateSelectionButton()
 }
 
-function   performItemSelection(itemType, newItem){
+function performSelectionChanges(itemType, newItem){
+
    switch (itemType){
        case "food":
            if(selectedFood.length > 0){
@@ -118,8 +116,9 @@ function   performItemSelection(itemType, newItem){
            default:
                console.exception("Error at checkforSectedItem function");
 
-   }
+    }
 
+    updateSelectionButton();
 }
 
 function updateSelectionButton(){
