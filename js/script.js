@@ -16,7 +16,7 @@ let selectedFood = null;
 let selectedDrink = null;
 let selectedDessert = null;
 let totalPrice = null;
-let clientData = null;
+const clientData = {"name": null, "address": null};
 
 
 
@@ -165,7 +165,7 @@ function calculateTotalPrice(){
     let foodPrice = formatValue(selectedFood.data.price);
     let drinkPrice = formatValue(selectedDrink.data.price);
     let dessertPrice = formatValue(selectedDessert.data.price);
-    
+
     let total = foodPrice + drinkPrice + dessertPrice;
 
     return total.toFixed(2);
@@ -182,15 +182,12 @@ function cancelSelection(){
     orderDiv.classList.add("ocult");
 }
 
-function handleOrderClick(){
-    
+function handleOrderClick(){ 
     removeDeliveryInfomation();
     renderInputFields(orderDiv);
 
-
     orderButton.removeEventListener("click", handleOrderClick);
     orderButton.addEventListener("click", finishOrder);
-
 }
 
 function removeDeliveryInfomation(){
@@ -202,8 +199,6 @@ function removeDeliveryInfomation(){
         orderDiv.removeChild(child);
     })
 }
-
-
 
 function renderInputFields(div){
 
@@ -238,41 +233,35 @@ function renderInputFields(div){
 
 
 function checkForInputs(input1, input2){
-    
-    input1.addEventListener("keyup", () => handleChange(input1, input2));
-    input2.addEventListener("keyup", () => handleChange(input1, input2));
-    
+    input1.addEventListener("keyup", () => handleInputsChange(input1, input2));
+    input2.addEventListener("keyup", () => handleInputsChange(input1, input2));
 }
 
-
-function handleChange(input1, input2){
+function handleInputsChange(input1, input2){
     if(input1.value && input2.value){
         orderButton.disabled=false;
 
-        clientName = input1.value;
-        clientAddress = input2.value;
+        clientData.name = input1.value;
+        clientData.address = input2.value;
     }
     else{
         orderButton.disabled=true;
     }
 }
 
-
 function finishOrder(){
 
     let message = `
     Olá, gostaria de fazer o pedido:
 
-    - Prato: ${selectedFood[1].name} 
-
-    - Bebida: ${selectedDrink[1].name}
-
-    - Sobremesa: ${selectedDessert[1].name}
-
+    - Prato: ${selectedFood.data.name} 
+    - Bebida: ${selectedDrink.data.name}
+    - Sobremesa: ${selectedDessert.data.name}
+    
     Total: R$ ${totalPrice}
 
-    Nome: ${clientName}
-    Endereço: ${clientAddress}
+    Nome: ${clientData.name}
+    Endereço: ${clientData.address}
     `
  
     message = encodeURIComponent(message);
