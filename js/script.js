@@ -193,10 +193,13 @@ function removeDeliveryInfomation() {
 }
 
 function renderInputFields(div) {
-  const nameLabel = document.createElement("p");
+  const nameLabel = document.createElement("label");
+  nameLabel.setAttribute("for", "nameInput");
   nameLabel.innerHTML = "Nome:";
-  const addressLabel = document.createElement("p");
+
+  const addressLabel = document.createElement("label");
   addressLabel.innerHTML = "Endereço:";
+  addressLabel.setAttribute("for", "addressInput");
 
   const nameInput = document.createElement("input");
   nameInput.setAttribute("id", "nameInput");
