@@ -228,3 +228,10 @@ button:disabled {
 .ocult {
   display: none;
 }
+
+@media (max-width: 400px) {
+  .delivery {
+    width: 350px;
+    left: calc(50% - 175px);
+  }
+}
