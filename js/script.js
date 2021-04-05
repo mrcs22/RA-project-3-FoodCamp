@@ -256,5 +256,5 @@ function finishOrder() {
 
   message = encodeURIComponent(message);
 
-  window.open(`https://wa.me/?text=${message}`);
+  window.location.href(`https://wa.me/?text=${message}`);
 }
