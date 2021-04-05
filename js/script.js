@@ -76,30 +76,30 @@ function performSelectionChanges(itemType, selectedItem) {
   switch (itemType) {
     case "food":
       if (selectedFood !== null) {
-        let lastSelectedfood = selectedFood.htmlElement;
+        const lastSelectedfood = selectedFood.htmlElement;
         lastSelectedfood.classList.remove("selected");
 
-        let lastSelectionIcon = lastSelectedfood.querySelector("ion-icon");
+        const lastSelectionIcon = lastSelectedfood.querySelector("ion-icon");
         lastSelectionIcon.classList.add("ocult");
       }
       selectedFood = { htmlElement, data };
       break;
     case "drink":
       if (selectedDrink !== null) {
-        let lastSelectedDrink = selectedDrink.htmlElement;
+        const lastSelectedDrink = selectedDrink.htmlElement;
         lastSelectedDrink.classList.remove("selected");
 
-        let lastSelectionIcon = lastSelectedDrink.querySelector("ion-icon");
+        const lastSelectionIcon = lastSelectedDrink.querySelector("ion-icon");
         lastSelectionIcon.classList.add("ocult");
       }
       selectedDrink = { htmlElement, data };
       break;
     case "dessert":
       if (selectedDessert !== null) {
-        let lastSelectedDessert = selectedDessert.htmlElement;
+        const lastSelectedDessert = selectedDessert.htmlElement;
         lastSelectedDessert.classList.remove("selected");
 
-        let lastSelectionIcon = lastSelectedDessert.querySelector("ion-icon");
+        const lastSelectionIcon = lastSelectedDessert.querySelector("ion-icon");
         lastSelectionIcon.classList.add("ocult");
       }
       selectedDessert = { htmlElement, data };
@@ -153,11 +153,11 @@ function renderCheckOrder() {
 }
 
 function calculateTotalPrice() {
-  let foodPrice = formatValue(selectedFood.data.price);
-  let drinkPrice = formatValue(selectedDrink.data.price);
-  let dessertPrice = formatValue(selectedDessert.data.price);
+  const foodPrice = formatValue(selectedFood.data.price);
+  const drinkPrice = formatValue(selectedDrink.data.price);
+  const dessertPrice = formatValue(selectedDessert.data.price);
 
-  let total = foodPrice + drinkPrice + dessertPrice;
+  const total = foodPrice + drinkPrice + dessertPrice;
 
   return total.toFixed(2);
 }
@@ -175,7 +175,7 @@ function cancelSelection() {
 
 function handleOrderClick() {
   removeDeliveryInfomation();
-  renderInputFields(orderDiv);
+  renderInputFields();
 
   orderButton.removeEventListener("click", handleOrderClick);
   orderButton.addEventListener("click", finishOrder);
@@ -183,7 +183,7 @@ function handleOrderClick() {
 
 function removeDeliveryInfomation() {
   let orderDivChildren = orderDiv.querySelectorAll("p");
-  let cancelStrong = orderDiv.querySelector("strong:last-child");
+  const cancelStrong = orderDiv.querySelector("strong:last-child");
 
   orderDivChildren = [...orderDivChildren, cancelStrong];
 
@@ -192,7 +192,7 @@ function removeDeliveryInfomation() {
   });
 }
 
-function renderInputFields(div) {
+function renderInputFields() {
   const nameLabel = document.createElement("label");
   nameLabel.setAttribute("for", "nameInput");
   nameLabel.innerHTML = "Nome:";
@@ -212,14 +212,14 @@ function renderInputFields(div) {
   orderButton.innerHTML = "Concluir";
   orderButton.disabled = true;
 
-  div.removeChild(orderButton);
+  orderDiv.removeChild(orderButton);
 
-  div.appendChild(nameLabel);
-  div.appendChild(nameInput);
-  div.appendChild(addressLabel);
-  div.appendChild(addressInput);
+  orderDiv.appendChild(nameLabel);
+  orderDiv.appendChild(nameInput);
+  orderDiv.appendChild(addressLabel);
+  orderDiv.appendChild(addressInput);
 
-  div.appendChild(orderButton);
+  orderDiv.appendChild(orderButton);
 
   checkForInputs(nameInput, addressInput);
 }
