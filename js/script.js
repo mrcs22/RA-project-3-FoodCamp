@@ -1,16 +1,16 @@
-let foods = document.querySelectorAll("#foods li");
-let drinks = document.querySelectorAll("#drinks li");
-let desserts = document.querySelectorAll("#desserts li");
+const foods = document.querySelectorAll("#foods li");
+const drinks = document.querySelectorAll("#drinks li");
+const desserts = document.querySelectorAll("#desserts li");
 
-let finishSelectionButton = document.getElementById("finishSelectionButton");
+const finishSelectionButton = document.getElementById("finishSelectionButton");
 
 const orderButton = document.getElementById("order");
 const cancelSelectionButton = document.getElementById("cancel");
 
 const deliveryDivTitle = document.getElementById("deliveryTitle");
 
-let cover = document.querySelector(".cover");
-let orderDiv = document.querySelector(".delivery");
+const cover = document.querySelector(".cover");
+const orderDiv = document.querySelector(".delivery");
 
 let selectedFood = null;
 let selectedDrink = null;
@@ -256,5 +256,5 @@ function finishOrder() {
 
   message = encodeURIComponent(message);
 
-  window.location.href(`https://wa.me/?text=${message}`);
+  window.location.href = `https://wa.me/?text=${message}`;
 }
