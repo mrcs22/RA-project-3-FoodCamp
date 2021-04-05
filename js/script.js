@@ -62,16 +62,16 @@ function handleMenuClick(itemType, itemHtmlElement) {
 
   const thisItem = { itemHtmlElement, itemData };
 
-  const selectionIcon = itemHtmlElement.querySelector("ion-icon");
-  selectionIcon.classList.remove("ocult");
-
-  itemHtmlElement.classList.add("selected");
-
   performSelectionChanges(itemType, thisItem);
 }
 
 function performSelectionChanges(itemType, selectedItem) {
   const { itemHtmlElement: htmlElement, itemData: data } = selectedItem;
+
+  const selectionIcon = htmlElement.querySelector("ion-icon");
+  selectionIcon.classList.remove("ocult");
+
+  htmlElement.classList.add("selected");
 
   switch (itemType) {
     case "food":
@@ -256,5 +256,5 @@ function finishOrder() {
 
   message = encodeURIComponent(message);
 
-  window.location.href = `https://wa.me/?text=${message}`;
+  window.location.href = `https://wa.me/+5555996880556?text=${message}`;
 }
